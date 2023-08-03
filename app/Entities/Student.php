@@ -14,7 +14,6 @@ use Illuminate\Contracts\Support\Arrayable;
  * @ORM\DiscriminatorColumn(name="type", type="integer")
  * @ORM\DiscriminatorMap({1 = "RegularStudent", 2 = "IrregularStudent"})
  * @ORM\Table(name="students")
- * @ORM\HasLifecycleCallbacks
  */
 abstract class Student implements Arrayable
 {
@@ -41,23 +40,25 @@ abstract class Student implements Arrayable
     protected $email;
 
     /**
+     * @var \DateTime $created
+     *
      * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="created_at", type="datetime")
      */
-    protected $created_at;
+    protected $createdAt;
 
     /**
      * @var \DateTime $updated
      *
      * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="updated_at",type="datetime")
      */
-    protected $updated_at;
+    protected $updatedAt;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
-    protected $deleted_at;
+    protected $deletedAt;
 
     /**
      * @ORM\Column(name="content_changed", type="datetime", nullable=true)
@@ -77,28 +78,6 @@ abstract class Student implements Arrayable
      * @ORM\JoinTable(name="student_subject")
      */
     private $subjects;
-
-    /**
-     * @ORM\PrePersist
-     */
-    // public function onPrePersist()
-    // {
-    //     if (!$this->created_at) {
-    //         $this->created_at = new \Datetime('now');
-    //     }
-
-    //     if (!$this->updated_at) {
-    //         $this->updated_at = new \Datetime('now');
-    //     }
-    // }
-
-    /**
-     * @ORM\PreUpdate
-     */
-    // public function onPreUpdate()
-    // {
-    //     $this->updated_at = new \Datetime('now');
-    // }
 
     public function __construct()
     {
@@ -142,17 +121,17 @@ abstract class Student implements Arrayable
 
     public function getCreatedAt()
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     public function getUpdatedAt()
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
     public function getDeletedAt()
     {
-        return $this->deleted_at;
+        return $this->deletedAt;
     }
 
     public function getContentChanged()
