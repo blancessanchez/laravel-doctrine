@@ -4,6 +4,7 @@ namespace App\Entities;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Illuminate\Contracts\Support\Arrayable;
 
 /**
@@ -12,7 +13,6 @@ use Illuminate\Contracts\Support\Arrayable;
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="integer")
  * @ORM\DiscriminatorMap({1 = "RegularSubject", 2 = "SpecialSubject"})
- * @ORM\HasLifecycleCallbacks
  */
 abstract class Subject implements Arrayable
 {
@@ -24,19 +24,25 @@ abstract class Subject implements Arrayable
     protected $id;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @var \DateTime $created
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="created_at", type="datetime")
      */
-    protected $created_at;
+    protected $createdAt;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @var \DateTime $updated
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updated_at",type="datetime")
      */
-    protected $updated_at;
+    protected $updatedAt;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
-    protected $deleted_at;
+    protected $deletedAt;
 
     /**
      * @ORM\ManyToMany(targetEntity="Student", mappedBy="subjects", cascade={"remove"})
@@ -53,28 +59,6 @@ abstract class Subject implements Arrayable
      */
     private $specialSubject;
 
-    /**
-     * @ORM\PrePersist
-     */
-    public function onPrePersist()
-    {
-        if (!$this->created_at) {
-            $this->created_at = new \Datetime('now');
-        }
-
-        if (!$this->updated_at) {
-            $this->updated_at = new \Datetime('now');
-        }
-    }
-
-    /**
-     * @ORM\PreUpdate
-     */
-    public function onPreUpdate()
-    {
-        $this->updated_at = new \Datetime('now');
-    }
-
     public function __construct()
     {
         $this->students = new ArrayCollection;
@@ -85,11 +69,19 @@ abstract class Subject implements Arrayable
         return $this->id;
     }
 
-    public function toArray()
+    public function getCreatedAt()
     {
-        return [
-            'id' => $this->getId(),
-        ];
+        return $this->createdAt;
+    }
+
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
     }
 
     public function addStudent(Student $student): void
@@ -106,5 +98,15 @@ abstract class Subject implements Arrayable
             $this->students->removeElement($student);
             $student->removeSubject($this);
         }
+    }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->getId(),
+            'created_at' => $this->getCreatedAt(),
+            'updated_at' => $this->getUpdatedAt(),
+            'deleted_at' => $this->getDeletedAt(),
+        ];
     }
 }

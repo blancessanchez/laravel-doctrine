@@ -186,7 +186,7 @@ abstract class Student implements Arrayable
             'updated_at' => $this->getUpdatedAt(),
             'deleted_at' => $this->getDeletedAt(),
             'content_changed' => $this->getContentChanged(),
-            'subjects' => $this->getSubjects(),
+            'subjects' => $this->getSubjects()->toArray(),
         ];
     }
 }

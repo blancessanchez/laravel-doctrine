@@ -4,12 +4,12 @@ namespace App\Entities;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Illuminate\Contracts\Support\Arrayable;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="schools")
- * @ORM\HasLifecycleCallbacks
  */
 class School implements Arrayable
 {
@@ -26,47 +26,31 @@ class School implements Arrayable
     protected $name;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @var \DateTime $created
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="created_at", type="datetime")
      */
-    protected $created_at;
+    protected $createdAt;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @var \DateTime $updated
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updated_at",type="datetime")
      */
-    protected $updated_at;
+    protected $updatedAt;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
-    protected $deleted_at;
+    protected $deletedAt;
 
     /**
      * @ORM\OneToMany(targetEntity="Student", mappedBy="school", cascade={"persist"})
      * @var ArrayCollection|Student[]
      */
     protected $students;
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function onPrePersist()
-    {
-        if (!$this->created_at) {
-            $this->created_at = new \Datetime('now');
-        }
-
-        if (!$this->updated_at) {
-            $this->updated_at = new \Datetime('now');
-        }
-    }
-
-    /**
-     * @ORM\PreUpdate
-     */
-    public function onPreUpdate()
-    {
-        $this->updated_at = new \Datetime('now');
-    }
 
     public function __construct()
     {
@@ -88,19 +72,24 @@ class School implements Arrayable
         return $this->name;
     }
 
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
     public function getStudents()
     {
         return $this->students;
-    }
-
-    public function setCreated()
-    {
-        $this->created_at = new \Datetime('now');
-    }
-
-    public function setUpdated()
-    {
-        $this->updated_at = new \Datetime('now');
     }
 
     public function toArray()
@@ -108,6 +97,9 @@ class School implements Arrayable
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
+            'created_at' => $this->getCreatedAt(),
+            'updated_at' => $this->getUpdatedAt(),
+            'deleted_at' => $this->getDeletedAt(),
             'students' => $this->getStudents(),
         ];
     }

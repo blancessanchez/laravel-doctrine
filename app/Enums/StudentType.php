@@ -19,14 +19,4 @@ enum StudentType: int
             self::Irregular => 'Irregular',
         };
     }
-
-    /**
-     * Get the list of values
-     *
-     * @return array
-     */
-    public static function values(): array
-    {
-        return array_column(self::cases(), 'name', 'value');
-    }
 }
