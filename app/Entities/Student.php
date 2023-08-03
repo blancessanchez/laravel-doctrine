@@ -5,6 +5,7 @@ namespace App\Entities;
 use App\Entities\Embeddables\Name;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Illuminate\Contracts\Support\Arrayable;
 
 /**
@@ -40,11 +41,15 @@ abstract class Student implements Arrayable
     protected $email;
 
     /**
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
      */
     protected $created_at;
 
     /**
+     * @var \DateTime $updated
+     *
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime")
      */
     protected $updated_at;
@@ -53,6 +58,12 @@ abstract class Student implements Arrayable
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $deleted_at;
+
+    /**
+     * @ORM\Column(name="content_changed", type="datetime", nullable=true)
+     * @Gedmo\Timestampable(on="change", field={"name_first", "name_last", "email", "birthdate"})
+     */
+    protected $contentChanged;
 
     /**
      * @ORM\ManyToOne(targetEntity="School", inversedBy="students")
@@ -70,24 +81,24 @@ abstract class Student implements Arrayable
     /**
      * @ORM\PrePersist
      */
-    public function onPrePersist()
-    {
-        if (!$this->created_at) {
-            $this->created_at = new \Datetime('now');
-        }
+    // public function onPrePersist()
+    // {
+    //     if (!$this->created_at) {
+    //         $this->created_at = new \Datetime('now');
+    //     }
 
-        if (!$this->updated_at) {
-            $this->updated_at = new \Datetime('now');
-        }
-    }
+    //     if (!$this->updated_at) {
+    //         $this->updated_at = new \Datetime('now');
+    //     }
+    // }
 
     /**
      * @ORM\PreUpdate
      */
-    public function onPreUpdate()
-    {
-        $this->updated_at = new \Datetime('now');
-    }
+    // public function onPreUpdate()
+    // {
+    //     $this->updated_at = new \Datetime('now');
+    // }
 
     public function __construct()
     {
@@ -144,6 +155,11 @@ abstract class Student implements Arrayable
         return $this->deleted_at;
     }
 
+    public function getContentChanged()
+    {
+        return $this->contentChanged;
+    }
+
     public function setSchool(School $school)
     {
         $this->school = $school;
@@ -190,6 +206,7 @@ abstract class Student implements Arrayable
             'created_at' => $this->getCreatedAt(),
             'updated_at' => $this->getUpdatedAt(),
             'deleted_at' => $this->getDeletedAt(),
+            'content_changed' => $this->getContentChanged(),
             'subjects' => $this->getSubjects(),
         ];
     }
