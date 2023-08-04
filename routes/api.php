@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\DistrictController;
 use App\Http\Controllers\Api\SchoolController;
 use App\Http\Controllers\Api\StudentController;
 use Illuminate\Http\Request;
@@ -20,10 +21,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('students', StudentController::class)->only([
+Route::resource('districts', DistrictController::class)->only([
     'index', 'store'
 ]);
 
+Route::get('/get-district', [DistrictController::class, 'getDistrictBasedOnStudentId']);
+
 Route::resource('schools', SchoolController::class)->only([
     'store'
+]);
+
+Route::resource('students', StudentController::class)->only([
+    'index', 'store'
 ]);

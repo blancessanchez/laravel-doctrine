@@ -67,10 +67,10 @@ class RegularStudent extends \App\Entities\RegularStudent implements \Doctrine\O
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'id', 'birthdate', 'email', 'created_at', 'updated_at', 'deleted_at', 'school'];
+            return ['__isInitialized__', 'id', 'birthdate', 'email', 'createdAt', 'updatedAt', 'deletedAt', 'contentChanged', 'school'];
         }
 
-        return ['__isInitialized__', 'id', 'birthdate', 'email', 'created_at', 'updated_at', 'deleted_at', 'school'];
+        return ['__isInitialized__', 'id', 'birthdate', 'email', 'createdAt', 'updatedAt', 'deletedAt', 'contentChanged', 'school'];
     }
 
     /**
@@ -191,28 +191,6 @@ class RegularStudent extends \App\Entities\RegularStudent implements \Doctrine\O
     /**
      * {@inheritDoc}
      */
-    public function onPrePersist()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'onPrePersist', []);
-
-        return parent::onPrePersist();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function onPreUpdate()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'onPreUpdate', []);
-
-        return parent::onPreUpdate();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function getId()
     {
         if ($this->__isInitialized__ === false) {
@@ -239,12 +217,34 @@ class RegularStudent extends \App\Entities\RegularStudent implements \Doctrine\O
     /**
      * {@inheritDoc}
      */
+    public function getAddress(): \App\Entities\Embeddables\Address
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAddress', []);
+
+        return parent::getAddress();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function setFullname(string $firstname, string $lastname)
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setFullname', [$firstname, $lastname]);
 
         return parent::setFullname($firstname, $lastname);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setAddress(string $street, string $postalCode, string $city, string $country)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setAddress', [$street, $postalCode, $city, $country]);
+
+        return parent::setAddress($street, $postalCode, $city, $country);
     }
 
     /**
@@ -322,6 +322,17 @@ class RegularStudent extends \App\Entities\RegularStudent implements \Doctrine\O
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDeletedAt', []);
 
         return parent::getDeletedAt();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getContentChanged()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getContentChanged', []);
+
+        return parent::getContentChanged();
     }
 
     /**

@@ -67,10 +67,10 @@ class RegularSubject extends \App\Entities\RegularSubject implements \Doctrine\O
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'name', '' . "\0" . 'App\\Entities\\RegularSubject' . "\0" . 'subject', 'id', 'created_at', 'updated_at', 'deleted_at'];
+            return ['__isInitialized__', 'name', '' . "\0" . 'App\\Entities\\RegularSubject' . "\0" . 'subject', 'id', 'createdAt', 'updatedAt', 'deletedAt'];
         }
 
-        return ['__isInitialized__', 'name', '' . "\0" . 'App\\Entities\\RegularSubject' . "\0" . 'subject', 'id', 'created_at', 'updated_at', 'deleted_at'];
+        return ['__isInitialized__', 'name', '' . "\0" . 'App\\Entities\\RegularSubject' . "\0" . 'subject', 'id', 'createdAt', 'updatedAt', 'deletedAt'];
     }
 
     /**
@@ -213,28 +213,6 @@ class RegularSubject extends \App\Entities\RegularSubject implements \Doctrine\O
     /**
      * {@inheritDoc}
      */
-    public function onPrePersist()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'onPrePersist', []);
-
-        return parent::onPrePersist();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function onPreUpdate()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'onPreUpdate', []);
-
-        return parent::onPreUpdate();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function getId()
     {
         if ($this->__isInitialized__ === false) {
@@ -245,6 +223,39 @@ class RegularSubject extends \App\Entities\RegularSubject implements \Doctrine\O
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
 
         return parent::getId();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getCreatedAt()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCreatedAt', []);
+
+        return parent::getCreatedAt();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getUpdatedAt()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUpdatedAt', []);
+
+        return parent::getUpdatedAt();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDeletedAt()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDeletedAt', []);
+
+        return parent::getDeletedAt();
     }
 
     /**

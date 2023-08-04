@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Entities\District;
 use App\Entities\School;
 use Doctrine\ORM\EntityRepository;
 
@@ -17,6 +18,17 @@ class SchoolRepository extends EntityRepository
     {
         $school = new School();
         $school->setName($data['name']);
+
+        $district = $this
+            ->getEntityManager()
+            ->getRepository(District::class)
+            ->find($data['district_id']);
+
+        if (!$district) {
+            throw new \Exception('Invalid district id provided');
+        }
+
+        $school->setDistrict($district);
 
         $this->getEntityManager()->persist($school);
         $this->getEntityManager()->flush();

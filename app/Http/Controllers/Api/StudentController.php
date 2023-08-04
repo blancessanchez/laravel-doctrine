@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreStudentRequest;
 use App\Repositories\StudentRepository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
 class StudentController extends Controller

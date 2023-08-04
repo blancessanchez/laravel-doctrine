@@ -26,7 +26,7 @@ class School implements Arrayable
     protected $name;
 
     /**
-     * @var \DateTime $created
+     * @var \DateTime $createdAt
      *
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
@@ -34,7 +34,7 @@ class School implements Arrayable
     protected $createdAt;
 
     /**
-     * @var \DateTime $updated
+     * @var \DateTime $updatedAt
      *
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated_at",type="datetime")
@@ -45,6 +45,13 @@ class School implements Arrayable
      * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
     protected $deletedAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="District", inversedBy="schools")
+     * @ORM\JoinColumn(name="district_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     * @var District
+     */
+    protected $district;
 
     /**
      * @ORM\OneToMany(targetEntity="Student", mappedBy="school", cascade={"persist"})
@@ -85,6 +92,16 @@ class School implements Arrayable
     public function getDeletedAt()
     {
         return $this->deletedAt;
+    }
+
+    public function setDistrict(District $district)
+    {
+        $this->district = $district;
+    }
+
+    public function getDistrict(): ?District
+    {
+        return $this->district;
     }
 
     public function getStudents()

@@ -67,10 +67,10 @@ class School extends \App\Entities\School implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'id', 'name', 'created_at', 'updated_at', 'deleted_at', 'students'];
+            return ['__isInitialized__', 'id', 'name', 'createdAt', 'updatedAt', 'deletedAt', 'district', 'students'];
         }
 
-        return ['__isInitialized__', 'id', 'name', 'created_at', 'updated_at', 'deleted_at', 'students'];
+        return ['__isInitialized__', 'id', 'name', 'createdAt', 'updatedAt', 'deletedAt', 'district', 'students'];
     }
 
     /**
@@ -180,28 +180,6 @@ class School extends \App\Entities\School implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function onPrePersist()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'onPrePersist', []);
-
-        return parent::onPrePersist();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function onPreUpdate()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'onPreUpdate', []);
-
-        return parent::onPreUpdate();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function getId()
     {
         if ($this->__isInitialized__ === false) {
@@ -239,34 +217,67 @@ class School extends \App\Entities\School implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
+    public function getCreatedAt()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCreatedAt', []);
+
+        return parent::getCreatedAt();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getUpdatedAt()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUpdatedAt', []);
+
+        return parent::getUpdatedAt();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDeletedAt()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDeletedAt', []);
+
+        return parent::getDeletedAt();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setDistrict(\App\Entities\District $district)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setDistrict', [$district]);
+
+        return parent::setDistrict($district);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDistrict(): ?\App\Entities\District
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDistrict', []);
+
+        return parent::getDistrict();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getStudents()
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getStudents', []);
 
         return parent::getStudents();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setCreated()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCreated', []);
-
-        return parent::setCreated();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setUpdated()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setUpdated', []);
-
-        return parent::setUpdated();
     }
 
     /**
