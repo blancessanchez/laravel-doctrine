@@ -27,6 +27,10 @@ class StoreStudentRequest extends FormRequest
             'lastname' => 'required|string|max:255',
             'birthdate' => 'required|date',
             'email' => 'required',
+            'street' => 'required|string|max:255',
+            'postal_code' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'country' => 'required|string|max:255',
         ];
     }
 }

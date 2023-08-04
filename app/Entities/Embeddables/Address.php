@@ -41,23 +41,28 @@ class Address
         $this->country = $country;
     }
 
-    public function getStreet()
+    public function getStreet(): string
     {
         return $this->street;
     }
 
-    public function getPostalCode()
+    public function getPostalCode(): string
     {
         return $this->postalCode;
     }
 
-    public function getCity()
+    public function getCity(): string
     {
         return $this->city;
     }
 
-    public function getCountry()
+    public function getCountry(): string
     {
         return $this->country;
+    }
+
+    public function __toString(): string
+    {
+        return "{$this->street}, {$this->postalCode}, {$this->city}, {$this->country}";
     }
 }

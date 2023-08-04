@@ -25,13 +25,18 @@ class Name
         $this->last = $lastname;
     }
 
-    public function getFirstName()
+    public function getFirstName(): string
     {
         return $this->first;
     }
 
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->last;
+    }
+
+    public function __toString(): string
+    {
+        return "{$this->first} {$this->last}";
     }
 }
