@@ -79,6 +79,14 @@ class StudentRepository extends EntityRepository
         $this->getEntityManager()->persist($student);
         $this->getEntityManager()->flush();
 
+        // $unitOfWork = $this->getEntityManager()->getUnitOfWork();
+
+        // $countInsertions = count($unitOfWork->getScheduledEntityInsertions());
+        // $countUpdates = count($unitOfWork->getScheduledEntityUpdates());
+        // $countDeletions = count($unitOfWork->getScheduledEntityDeletions());
+
+        // $totalChanges = $countInsertions + $countUpdates + $countDeletions;
+
         return $student;
     }
 

@@ -67,10 +67,15 @@ class District implements Arrayable
     protected $deletedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="School", mappedBy="district", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="School", mappedBy="district", cascade={"persist", "remove"})
      * @var ArrayCollection|School[]
      */
     protected $schools;
+
+    public function __construct()
+    {
+        $this->schools = new ArrayCollection;
+    }
 
     public function getId()
     {
@@ -97,7 +102,7 @@ class District implements Arrayable
         return $this->area;
     }
 
-    public function getTotalSchools(): int
+    public function getTotalSchools(): ?int
     {
         return $this->totalSchools;
     }
@@ -127,11 +132,6 @@ class District implements Arrayable
         $this->phoneNo = $phoneNo;
     }
 
-    public function getSchools()
-    {
-        return $this->schools;
-    }
-
     public function getCreatedAt()
     {
         return $this->createdAt;
@@ -147,13 +147,32 @@ class District implements Arrayable
         return $this->deletedAt;
     }
 
+    /**
+     * Add a school to the district
+     *
+     * @param School $school
+     */
+    public function addSchool(School $school): self {
+        if (!$this->schools->contains($school)) {
+            $this->schools[] = $school;
+            $school->setDistrict($this);
+        }
+
+        return $this;
+    }
+
+    public function getSchools()
+    {
+        return $this->schools;
+    }
+
     public function toArray()
     {
         return [
             'id' => $this->getId(),
             'district_name' => $this->getName(),
             'area' => $this->getArea(),
-            'totalSchools' => $this->getSchools(),
+            'totalSchools' => $this->getTotalSchools(),
             'superintendent' => $this->getSuperintendent(),
             'phone_no' => $this->getPhoneNo(),
             'created_at' => $this->getCreatedAt(),

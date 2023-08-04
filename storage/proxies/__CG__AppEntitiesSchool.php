@@ -195,7 +195,7 @@ class School extends \App\Entities\School implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function setName(string $name)
+    public function setName(?string $name)
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setName', [$name]);

@@ -26,4 +26,11 @@ class DistrictController extends Controller
 
         return response()->json($student, 200);
     }
+
+    public function destroy($dataId)
+    {
+        $district = $this->districtRepository->destroy($dataId);
+
+        return response()->json($district, 200);
+    }
 }

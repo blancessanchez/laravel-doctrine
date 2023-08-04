@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::resource('districts', DistrictController::class)->only([
-    'index', 'store'
+    'index', 'store', 'destroy'
 ]);
 
 Route::get('/get-district', [DistrictController::class, 'getDistrictBasedOnStudentId']);

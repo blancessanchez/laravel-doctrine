@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Entities\District;
+use App\Entities\School;
 use Doctrine\ORM\EntityRepository;
 
 class DistrictRepository extends EntityRepository
@@ -23,6 +24,11 @@ class DistrictRepository extends EntityRepository
         $district->setSuperintendent($data['superintendent']);
         $district->setPhoneNo($data['phone_no']);
 
+        $school = new School();
+        $school->setName($data['school']);
+
+        $district->addSchool($school);
+
         $this->getEntityManager()->persist($district);
         $this->getEntityManager()->flush();
 
@@ -42,5 +48,17 @@ class DistrictRepository extends EntityRepository
             ->setParameter('studentId', $studentSchoolId)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function destroy($data)
+    {
+        $district = $this->find($data);
+
+        if (!$district) {
+            return false;
+        }
+
+        $this->getEntityManager()->remove($district);
+        $this->getEntityManager()->flush();
     }
 }

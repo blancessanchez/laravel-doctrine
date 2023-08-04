@@ -250,7 +250,7 @@ class District extends \App\Entities\District implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function setTotalSchools(int $totalSchools)
+    public function setTotalSchools(?int $totalSchools)
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setTotalSchools', [$totalSchools]);
@@ -344,6 +344,17 @@ class District extends \App\Entities\District implements \Doctrine\ORM\Proxy\Pro
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDeletedAt', []);
 
         return parent::getDeletedAt();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function addSchool(\App\Entities\School $school)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addSchool', [$school]);
+
+        return parent::addSchool($school);
     }
 
     /**
