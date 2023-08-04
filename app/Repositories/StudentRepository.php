@@ -59,6 +59,12 @@ class StudentRepository extends EntityRepository
         $student = $this->createStudentBasedOnType($data['type']);
 
         $student->setFullname($data['firstname'], $data['lastname']);
+        $student->setAddress(
+            $data['street'],
+            $data['postal_code'],
+            $data['city'],
+            $data['country'],
+        );
         $student->setBirthdate(new \DateTime($data['birthdate']));
         $student->setEmail($data['email']);
 

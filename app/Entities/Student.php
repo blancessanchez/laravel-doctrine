@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use App\Entities\Embeddables\Address;
 use App\Entities\Embeddables\Name;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -28,6 +29,11 @@ abstract class Student implements Arrayable
      * @ORM\Embedded(class="App\Entities\Embeddables\Name")
      */
     private $name;
+
+    /**
+     * @ORM\Embedded(class="App\Entities\Embeddables\Address")
+     */
+    private $address;
 
     /**
      * @ORM\Column(type="date")
@@ -94,9 +100,24 @@ abstract class Student implements Arrayable
         return $this->name;
     }
 
+    public function getAddress(): Address
+    {
+        return $this->address;
+    }
+
     public function setFullname(string $firstname, string $lastname)
     {
         $this->name = new Name($firstname, $lastname);
+    }
+
+    public function setAddress(
+        string $street,
+        string $postalCode,
+        string $city,
+        string $country
+    )
+    {
+        $this->address = new Address($street, $postalCode, $city, $country);
     }
 
     public function setBirthdate(\DateTime $birthdate)
@@ -179,6 +200,10 @@ abstract class Student implements Arrayable
             'school' => $this->getSchool()->toArray(),
             'firstname' => $this->getFullname()->getFirstName(),
             'lastname' => $this->getFullname()->getLastName(),
+            'street' => $this->getAddress()->getStreet(),
+            'postal_code' => $this->getAddress()->getPostalCode(),
+            'city' => $this->getAddress()->getCity(),
+            'country' => $this->getAddress()->getCountry(),
             'birthdate' => $this->getBirthdate(),
             'email' => $this->getEmail(),
             'type' => $this->getType(),
