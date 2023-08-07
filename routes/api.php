@@ -28,7 +28,7 @@ Route::resource('districts', DistrictController::class)->only([
 Route::get('/get-district', [DistrictController::class, 'getDistrictBasedOnStudentId']);
 
 Route::resource('schools', SchoolController::class)->only([
-    'store'
+    'store', 'show'
 ]);
 
 Route::resource('students', StudentController::class)->only([

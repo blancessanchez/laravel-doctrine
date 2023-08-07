@@ -67,10 +67,10 @@ class School extends \App\Entities\School implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'id', 'name', 'createdAt', 'updatedAt', 'deletedAt', 'district', 'students'];
+            return ['__isInitialized__', 'id', 'name', '' . "\0" . 'App\\Entities\\School' . "\0" . 'price', 'createdAt', 'updatedAt', 'deletedAt', 'district', 'students'];
         }
 
-        return ['__isInitialized__', 'id', 'name', 'createdAt', 'updatedAt', 'deletedAt', 'district', 'students'];
+        return ['__isInitialized__', 'id', 'name', '' . "\0" . 'App\\Entities\\School' . "\0" . 'price', 'createdAt', 'updatedAt', 'deletedAt', 'district', 'students'];
     }
 
     /**
@@ -195,7 +195,7 @@ class School extends \App\Entities\School implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function setName(?string $name)
+    public function setName(string $name)
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setName', [$name]);
@@ -212,6 +212,28 @@ class School extends \App\Entities\School implements \Doctrine\ORM\Proxy\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', []);
 
         return parent::getName();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setPrice(\Money\Money $price): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPrice', [$price]);
+
+        parent::setPrice($price);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getPrice(): \Money\Money
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPrice', []);
+
+        return parent::getPrice();
     }
 
     /**

@@ -50,7 +50,9 @@ return [
             */
             'events'        => [
                 'listeners'   => [],
-                'subscribers' => []
+                'subscribers' => [
+                    \App\EventSubscribers\OnFlushEventSubscriber::class,
+                ]
             ],
             'filters'       => [],
             /*
@@ -112,6 +114,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'custom_types'               => [
+        'money' => \App\Types\MoneyType::class,
     ],
     /*
     |--------------------------------------------------------------------------

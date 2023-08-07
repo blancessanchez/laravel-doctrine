@@ -239,7 +239,7 @@ class District extends \App\Entities\District implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function getTotalSchools(): int
+    public function getTotalSchools(): ?int
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTotalSchools', []);
@@ -305,17 +305,6 @@ class District extends \App\Entities\District implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function getSchools()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSchools', []);
-
-        return parent::getSchools();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function getCreatedAt()
     {
 
@@ -349,12 +338,23 @@ class District extends \App\Entities\District implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function addSchool(\App\Entities\School $school)
+    public function addSchool(\App\Entities\School $school): \App\Entities\District
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'addSchool', [$school]);
 
         return parent::addSchool($school);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getSchools()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSchools', []);
+
+        return parent::getSchools();
     }
 
     /**
