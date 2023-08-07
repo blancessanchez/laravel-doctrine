@@ -48,12 +48,23 @@ class DistrictController extends Controller
     /**
      * destroy
      *
-     * @param  string $dataId
+     * @param  string $id
      * @return void
      */
-    public function destroy($dataId)
+    public function destroy($id)
     {
-        $district = $this->districtRepository->destroy($dataId);
+        $district = $this->districtRepository->destroy($id);
+
+        return response()->json($district, 200);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $district = $this->districtRepository->update($request, $id);
+
+        if (!$district) {
+            return response()->json(['message' => 'District not found'], 404);
+        }
 
         return response()->json($district, 200);
     }

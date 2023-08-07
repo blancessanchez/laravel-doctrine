@@ -53,9 +53,9 @@ class DistrictRepository extends EntityRepository
             ->getOneOrNullResult();
     }
 
-    public function destroy($data)
+    public function destroy($id)
     {
-        $district = $this->find($data);
+        $district = $this->find($id);
 
         if (!$district) {
             return false;
@@ -63,5 +63,39 @@ class DistrictRepository extends EntityRepository
 
         $this->getEntityManager()->remove($district);
         $this->getEntityManager()->flush();
+    }
+
+    public function update($data, $id)
+    {
+        $district = $this->find($id);
+
+        if (!$district) {    
+            return false;
+        }
+
+        if (isset($data['name'])) {
+            $district->setName($data['name']);
+        }
+
+        if (isset($data['area'])) {
+            $district->setArea($data['area']);
+        }
+
+        if (isset($data['total_schools'])) {
+            $district->setTotalSchools($data['total_schools']);
+        }
+
+        if (isset($data['superintendent'])) {
+            $district->setSuperintendent($data['superintendent']);
+        }
+
+        if (isset($data['phone_no'])) {
+            $district->setPhoneNo($data['phone_no']);
+        }
+
+        $this->getEntityManager()->persist($district);
+        $this->getEntityManager()->flush();
+
+        return $district;
     }
 }

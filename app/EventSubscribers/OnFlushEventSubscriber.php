@@ -34,5 +34,32 @@ class OnFlushEventSubscriber implements EventSubscriber
                 'changeSet' => $unitOfWork->getEntityChangeSet($entity)
             ]);
         }
+
+        foreach ($unitOfWork->getScheduledEntityDeletions() as $entity) {
+            if ($entity instanceof District) {
+                $entity->setName('District update');
+            }
+
+            Log::info('Entity deletion', [
+                'entity' => get_class($entity),
+                'id' => $entity->getId()
+            ]);
+        }
+
+        foreach ($unitOfWork->getScheduledEntityUpdates() as $entity) {
+            if ($entity instanceof District) {
+                
+            }
+
+            $unitOfWork->recomputeSingleEntityChangeSet(
+                $entityManager->getClassMetadata(get_class($entity)),
+                $entity
+            );
+
+            Log::info('Entity update changeset', [
+                'entity' => get_class($entity),
+                'changeSet' => $unitOfWork->getEntityChangeSet($entity)
+            ]);
+        }
     }
 }
