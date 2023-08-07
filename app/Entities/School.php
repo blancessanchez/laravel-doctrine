@@ -90,10 +90,9 @@ class School implements Arrayable
         $this->price = $price;
     }
 
-    public function getPrice(): string
+    public function getPrice()
     {
-        return $this->price->getAmount() . ' ' . $this->price->getCurrency()->getCode();
-
+        return $this->price;
     }
 
     public function getCreatedAt()

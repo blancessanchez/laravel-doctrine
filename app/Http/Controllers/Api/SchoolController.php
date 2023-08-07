@@ -30,8 +30,6 @@ class SchoolController extends Controller
             abort(404, 'School not found');
         }
 
-        $price = $school->getPrice();
-
         return response()->json([$school->toArray()], 200);
     }
 }

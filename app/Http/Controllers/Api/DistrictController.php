@@ -40,7 +40,7 @@ class DistrictController extends Controller
      */
     public function getDistrictBasedOnStudentId(Request $request)
     {
-        $student = $this->districtRepository->getDistrictBasedOnStudentId($request['id']);
+        $student = $this->districtRepository->getDistrictBasedOnStudentId($request['student-id']);
 
         return response()->json($student, 200);
     }
@@ -54,6 +54,10 @@ class DistrictController extends Controller
     public function destroy($id)
     {
         $district = $this->districtRepository->destroy($id);
+
+        if (!$district) {
+            return response()->json(['message' => 'District not found'], 404);
+        }
 
         return response()->json($district, 200);
     }

@@ -228,7 +228,7 @@ class School extends \App\Entities\School implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getPrice(): \Money\Money
+    public function getPrice()
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPrice', []);

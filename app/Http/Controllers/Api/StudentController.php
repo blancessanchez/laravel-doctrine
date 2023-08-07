@@ -17,7 +17,8 @@ class StudentController extends Controller
 
     public function index()
     {
-        $students = $this->studentRepository->findBy(['birthdate' => new \DateTime('1998-01-01')]);
+        // $students = $this->studentRepository->findBy(['birthdate' => new \DateTime('1998-01-01')]);
+        $students = $this->studentRepository->findAll();
 
         return Collection::make($students);
     }
