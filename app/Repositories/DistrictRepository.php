@@ -5,6 +5,8 @@ namespace App\Repositories;
 use App\Entities\District;
 use App\Entities\School;
 use Doctrine\ORM\EntityRepository;
+use Money\Money;
+use Money\Currency;
 
 class DistrictRepository extends EntityRepository
 {
@@ -26,6 +28,7 @@ class DistrictRepository extends EntityRepository
 
         $school = new School();
         $school->setName($data['school']);
+        $school->setPrice(new Money($data['amount'], new Currency($data['currency'])));
 
         $district->addSchool($school);
 

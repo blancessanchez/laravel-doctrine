@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Illuminate\Contracts\Support\Arrayable;
+use Money\Money;
 
 /**
  * @ORM\Entity
@@ -24,6 +25,11 @@ class School implements Arrayable
      * @ORM\Column(type="string")
      */
     protected $name;
+
+    /**
+     * @ORM\Column(type="money", nullable=true)
+     */
+    private $price;
 
     /**
      * @var \DateTime $createdAt
@@ -79,6 +85,17 @@ class School implements Arrayable
         return $this->name;
     }
 
+    public function setPrice(Money $price): void
+    {
+        $this->price = $price;
+    }
+
+    public function getPrice(): string
+    {
+        return $this->price->getAmount() . ' ' . $this->price->getCurrency()->getCode();
+
+    }
+
     public function getCreatedAt()
     {
         return $this->createdAt;
@@ -114,6 +131,7 @@ class School implements Arrayable
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
+            'price' => $this->getPrice(),
             'created_at' => $this->getCreatedAt(),
             'updated_at' => $this->getUpdatedAt(),
             'deleted_at' => $this->getDeletedAt(),

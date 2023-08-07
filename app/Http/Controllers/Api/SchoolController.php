@@ -21,4 +21,17 @@ class SchoolController extends Controller
 
         return response()->json($school, 201);
     }
+
+    public function show($id)
+    {
+        $school = $this->schoolRepository->find($id);
+
+        if (!$school) {
+            abort(404, 'School not found');
+        }
+
+        $price = $school->getPrice();
+
+        return response()->json([$school->toArray()], 200);
+    }
 }
